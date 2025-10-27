@@ -22,7 +22,7 @@ $headers = getallheaders();
     </style>
 </head>
 <body>
-    <h1>MiniInstagram - Debug SSR</h1>
+    <h1>Camagru - Debug SSR</h1>
 
     <h2>Headers HTTP entrants</h2>
     <pre><?php print_r($headers); ?></pre>
