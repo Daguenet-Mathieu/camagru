@@ -1,0 +1,36 @@
+<!-- <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Hello World</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Hello World</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+
+    <div id="response"></div>
+
+    <script>
+        // Requête vers le backend PHP via Nginx
+        fetch('/service_test')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('response').innerHTML = html;
+            })
+            .catch(err => console.error('Erreur fetch:', err));
+    </script>
+</body>
+</html>

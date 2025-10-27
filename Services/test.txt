@@ -1,0 +1,8 @@
+# 1️⃣ Créer un réseau dédié
+docker network create camagru
+
+# 2️⃣ Lancer PHP dans ce réseau avec le nom 'app'
+docker run -d --name app --network camagru php:latest
+
+# 3️⃣ Lancer Nginx dans le même réseau et exposer le port 8080
+docker run -d -p 8080:80 --name nginx --network camagru serv:latest
