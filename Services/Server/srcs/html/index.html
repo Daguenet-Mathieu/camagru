@@ -10,7 +10,7 @@
 </body>
 </html> -->
 
-
+<!-- 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -31,6 +31,73 @@
                 document.getElementById('response').innerHTML = html;
             })
             .catch(err => console.error('Erreur fetch:', err));
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Hello World</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+
+    <div id="response"></div>
+
+    <!-- Formulaire upload image -->
+    <form id="uploadForm">
+        <input type="file" name="image" id="imageInput" accept="image/*" required>
+        <button type="submit">Upload Image</button>
+    </form>
+
+    <script>
+        const responseDiv = document.getElementById('response');
+        const form = document.getElementById('uploadForm');
+        const imageInput = document.getElementById('imageInput');
+
+        // Fonction pour afficher le contenu du backend
+        function fetchBackend(formData = null) {
+            fetch('/service_test', {
+                method: formData ? 'POST' : 'GET',
+                body: formData || null
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        const err = new Error("Erreur serveur");
+                        err.status = response.status;
+                        err.text = text; 
+                        throw err;
+                    });
+                }
+                return response.text();
+            })
+            .then(html => {
+                responseDiv.innerHTML = html;
+            })
+            .catch(err => {console.error('Erreur fetch:', err);
+                responseDiv.innerHTML = err.text;
+            });
+        }
+
+        // Chargement initial
+        // fetchBackend();
+
+        // Gestion du submit du formulaire
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const file = imageInput.files[0];
+            if (!file) return alert('Veuillez choisir une image.');
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetchBackend(formData);
+        });
     </script>
 </body>
 </html>

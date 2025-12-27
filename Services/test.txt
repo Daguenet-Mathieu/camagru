@@ -1,11 +1,16 @@
+mkdir volumes/volumemedia
 bash Server/scripts/ssl
 
 docker build Server/ -t serv
 
-docker build service_test/ -t php
+docker build service_test/ -t php_test
+
+docker build Media/ -t media
 
 docker network create camagru
 
-docker run -d --name app --network camagru php
+docker run -d --name app_php --network camagru php_test
 
-docker run -d -p 4433:443 --name nginx --network camagru serv
+docker run -d --name app_media --network camagru -v ./volumes/volumemedia:/app/volume media
+
+docker run -d -p 8080:80 -p 4433:443 --name nginx --network camagru -v ./volumes/volumemedia:/app/volume serv
