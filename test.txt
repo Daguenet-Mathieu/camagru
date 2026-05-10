@@ -14,11 +14,11 @@ docker run -d --name app_mail --network camagru mail
 
 docker run -d --name app_media \
   --network camagru \
-  -v ./Services/volumes/volumemedia:/app/volume \
+  -v $PWD/Services/volumes/volumemedia:/app/volume \
   media
 
 docker run -d -p 8080:80 -p 4433:443 \
   --name nginx \
   --network camagru \
-  -v ./Services/volumes/volumemedia:/app/volume \
+  -v $PWD/Services/volumes/volumemedia:/app/volume \
   serv
