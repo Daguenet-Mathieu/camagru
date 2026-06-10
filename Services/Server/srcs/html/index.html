@@ -99,5 +99,24 @@
             fetchBackend(formData);
         });
     </script>
+    <div>  <input type="email" id="dest" placeholder="destinataire" />
+  <textarea id="corp"></textarea>
+  <button onclick="send()">Envoyer</button>
+  <p id="status"></p>
+
+  <script>
+    async function send() {
+      const res = await fetch('/mail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          destinataire: document.getElementById('dest').value,
+          message: document.getElementById('corp').value
+        })
+      });
+      document.getElementById('status').textContent = res.ok ? 'OK' : 'Erreur ' + res.status;
+    }
+  </script>
+</div>
 </body>
 </html>

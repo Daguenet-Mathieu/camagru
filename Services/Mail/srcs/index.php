@@ -1,7 +1,9 @@
 <?php
-if (1) {
-    http_response_code(201);
-} else {
-    http_response_code(500);
-}
-?>
+$body = json_decode(file_get_contents('php://input'), true);
+
+$to      = $body['destinataire'];
+$message = $body['message'];
+
+$ok = mail($to, 'Camagru', $message);
+
+http_response_code($ok ? 200 : 500);
