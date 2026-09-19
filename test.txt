@@ -10,7 +10,7 @@ docker build Services/Mail/ -t mail
 docker network create camagru
 
 docker run -d --name app_php --network camagru php_test
-docker run -d --name app_mail --network camagru mail
+docker run -d --name app_mail --network camagru --env-file .env mail
 
 docker run -d --name app_media \
   --network camagru \
