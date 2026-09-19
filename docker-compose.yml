@@ -1,0 +1,88 @@
+name: Camagru
+
+services:
+  server:
+    build:
+      context: ./Services/Server
+    image: camagru/server
+    container_name: nginx
+    ports:
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
+    networks:
+      - camagru
+    volumes:
+      - ./Services/volumes/volumemedia:/app/volume
+
+  php:
+    build:
+      context: ./Services/service_test
+    image: camagru/php_test
+    container_name: app_php
+    networks:
+      - camagru
+
+  media:
+    build:
+      context: ./Services/Media
+    image: camagru/media
+    container_name: app_media
+    networks:
+      - camagru
+    volumes:
+      - ./Services/volumes/volumemedia:/app/volume
+
+  mail:
+    build:
+      context: ./Services/Mail
+    image: camagru/mail
+    container_name: app_mail
+    networks:
+      - camagru
+
+  interaction:
+    build:
+      context: ./Services/Interaction
+    image: camagru/interaction
+    container_name: app_interaction
+    networks:
+      - camagru
+
+  notification:
+    build:
+      context: ./Services/Notification
+    image: camagru/notification
+    container_name: app_notification
+    networks:
+      - camagru
+
+  user_db:
+    image: postgres:16
+    networks:
+      - camagru
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+  
+  media_db:
+    image: postgres:16
+    networks:
+      - camagru
+    volumes:
+      - media_db_data:/var/lib/postgresql/data
+  
+      
+  interaction_db:
+    image: postgres:16
+    networks:
+      - camagru
+    volumes:
+      - interaction_db_data:/var/lib/postgresql/data
+      
+volumes:
+  user_db_data:
+  media_db_data:
+  interaction_db_data:
+
+networks:
+  camagru:
+    name: camagru
