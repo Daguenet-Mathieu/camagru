@@ -22,6 +22,14 @@ services:
     networks:
       - camagru
 
+  user:
+    build:
+      context: ./Services/User
+    image: camagru/user
+    container_name: app_user
+    networks:
+      - camagru
+
   media:
     build:
       context: ./Services/Media
