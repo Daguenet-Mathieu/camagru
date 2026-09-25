@@ -80,9 +80,14 @@ services:
     image: postgres:16
     networks:
       - camagru
+    environment: 
+      POSTGRES_USER: ${USER_DB_USER}
+      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
+      POSTGRES_DB: ${USER_DB_NAME}
     volumes:
       - user_db_data:/var/lib/postgresql/data
-  
+      - ./Services/db/user/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
   media_db:
     image: postgres:16
     networks:
